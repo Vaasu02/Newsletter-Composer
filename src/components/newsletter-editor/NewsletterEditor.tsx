@@ -8,14 +8,17 @@ import { NewsletterSections } from './NewsletterSections';
 import { NewsletterPreview } from './NewsletterPreview';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Save, Eye, Plus } from 'lucide-react';
+import { DateTimePicker } from '@/components/ui/date-picker';
+import { Navbar } from '@/components/ui/navbar';
+import { Save, Eye, Plus, Calendar, Clock } from 'lucide-react';
 
 interface NewsletterEditorProps {
   newsletter?: Newsletter;
   onSave: (newsletter: Newsletter) => void;
+  onBack?: () => void;
 }
 
-export const NewsletterEditor = ({ newsletter, onSave }: NewsletterEditorProps) => {
+export const NewsletterEditor = ({ newsletter, onSave, onBack }: NewsletterEditorProps) => {
   const [currentNewsletter, setCurrentNewsletter] = useState<Newsletter>(
     newsletter || {
       id: Date.now().toString(),
@@ -31,16 +34,23 @@ export const NewsletterEditor = ({ newsletter, onSave }: NewsletterEditorProps) 
   );
 
   const [selectedTemplate, setSelectedTemplate] = useState(newsletterTemplates[0]);
+  const [scheduledDate, setScheduledDate] = useState<Date | undefined>(
+    newsletter?.scheduledDate
+  );
 
   useEffect(() => {
     if (!newsletter) {
-      // Initialize with first template
+      // Initialize with first template for new newsletter
       const template = newsletterTemplates[0];
       setCurrentNewsletter(prev => ({
         ...prev,
         layout: template.layout,
         sections: [...template.defaultSections],
       }));
+      setSelectedTemplate(template);
+    } else {
+      // Set the correct template based on the newsletter's layout
+      const template = newsletterTemplates.find(t => t.layout === newsletter.layout) || newsletterTemplates[0];
       setSelectedTemplate(template);
     }
   }, [newsletter]);
@@ -83,12 +93,37 @@ export const NewsletterEditor = ({ newsletter, onSave }: NewsletterEditorProps) 
     }));
   };
 
-  const handleSave = () => {
-    onSave(currentNewsletter);
+  const handleSaveAsDraft = () => {
+    const newsletterToSave = {
+      ...currentNewsletter,
+      status: 'draft' as const,
+      scheduledDate: undefined,
+    };
+    onSave(newsletterToSave);
+  };
+
+  const handleSchedule = () => {
+    if (!scheduledDate) {
+      alert('Please select a date and time to schedule the newsletter');
+      return;
+    }
+    
+    const newsletterToSave = {
+      ...currentNewsletter,
+      status: 'scheduled' as const,
+      scheduledDate: scheduledDate,
+    };
+    onSave(newsletterToSave);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="bg-gray-50">
+      <Navbar 
+        onNewNewsletter={() => {}} 
+        showBackButton={true}
+        onBack={onBack}
+      />
+      
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Newsletter Composer</h1>
@@ -134,6 +169,36 @@ export const NewsletterEditor = ({ newsletter, onSave }: NewsletterEditorProps) 
               sections={currentNewsletter.sections}
               onChange={handleSectionsChange}
             />
+
+            {/* Scheduling Section */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Calendar className="h-5 w-5" />
+                  Schedule Newsletter
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="text-sm text-gray-600">
+                  Choose when to send your newsletter. Leave empty to save as draft.
+                </div>
+                <DateTimePicker
+                  date={scheduledDate}
+                  onDateTimeChange={setScheduledDate}
+                  placeholder="Select date and time to schedule"
+                />
+                {scheduledDate && (
+                  <div className="text-sm text-green-600 bg-green-50 p-3 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-4 w-4" />
+                      <span>
+                        Newsletter will be scheduled for: {scheduledDate.toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </div>
 
           {/* Preview Panel */}
@@ -152,11 +217,23 @@ export const NewsletterEditor = ({ newsletter, onSave }: NewsletterEditorProps) 
           </div>
         </div>
 
-        {/* Save Button */}
-        <div className="mt-8 flex justify-end">
-          <Button onClick={handleSave} className="flex items-center gap-2">
+        {/* Save Buttons */}
+        <div className="mt-8 flex justify-end gap-4">
+          <Button 
+            onClick={handleSaveAsDraft} 
+            variant="outline"
+            className="flex items-center gap-2"
+          >
             <Save className="h-4 w-4" />
-            Save Newsletter
+            Save as Draft
+          </Button>
+          <Button 
+            onClick={handleSchedule}
+            className="flex items-center gap-2"
+            disabled={!scheduledDate}
+          >
+            <Calendar className="h-4 w-4" />
+            Schedule Newsletter
           </Button>
         </div>
       </div>

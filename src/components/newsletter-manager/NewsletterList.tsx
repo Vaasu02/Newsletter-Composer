@@ -16,10 +16,10 @@ interface NewsletterListProps {
 export const NewsletterList = ({ newsletters, onEdit, onDelete, onPreview }: NewsletterListProps) => {
   if (newsletters.length === 0) {
     return (
-      <Card>
-        <CardContent className="text-center py-12">
-          <div className="text-gray-500">
-            <Calendar className="h-12 w-12 mx-auto mb-4 opacity-50" />
+      <Card className="min-h-[70vh]">
+        <CardContent className="text-center py-42 flex flex-col justify-center items-center h-full">
+          <div className="text-gray-500 flex flex-col items-center justify-center">
+            <Calendar className="h-12 w-12 mb-4 opacity-50" />
             <h3 className="text-lg font-medium mb-2">No newsletters yet</h3>
             <p>Create your first newsletter to get started.</p>
           </div>
@@ -59,7 +59,7 @@ export const NewsletterList = ({ newsletters, onEdit, onDelete, onPreview }: New
                 {newsletter.scheduledDate && (
                   <div className="flex items-center gap-1 mt-1">
                     <Calendar className="h-3 w-3" />
-                    Scheduled: {newsletter.scheduledDate.toLocaleDateString()}
+                    Scheduled: {newsletter.scheduledDate.toLocaleDateString()} at {newsletter.scheduledDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </div>
                 )}
               </div>

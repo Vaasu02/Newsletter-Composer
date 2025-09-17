@@ -5,8 +5,7 @@ import { Newsletter } from '@/types/newsletter';
 import { NewsletterEditor } from '@/components/newsletter-editor/NewsletterEditor';
 import { NewsletterList } from './NewsletterList';
 import { NewsletterPreviewDrawer } from './NewsletterPreviewDrawer';
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
+import { Navbar } from '@/components/ui/navbar';
 
 export const NewsletterManager = () => {
   const [newsletters, setNewsletters] = useState<Newsletter[]>([]);
@@ -77,24 +76,16 @@ export const NewsletterManager = () => {
       <NewsletterEditor
         newsletter={selectedNewsletter || undefined}
         onSave={saveNewsletter}
+        onBack={() => setIsEditing(false)}
       />
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="bg-gray-50">
+      <Navbar onNewNewsletter={startNewNewsletter} />
+      
       <div className="container mx-auto px-4 py-8">
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Newsletter Manager</h1>
-            <p className="text-gray-600 mt-2">Manage your email campaigns</p>
-          </div>
-          <Button onClick={startNewNewsletter} className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            New Newsletter
-          </Button>
-        </div>
-
         <NewsletterList
           newsletters={newsletters}
           onEdit={editNewsletter}
