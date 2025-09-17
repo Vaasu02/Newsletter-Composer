@@ -5,7 +5,6 @@ import {
   Html,
   Preview,
   Section,
-  Text,
 } from '@react-email/components';
 import { Markdown } from '@react-email/markdown';
 import { Newsletter } from '@/types/newsletter';

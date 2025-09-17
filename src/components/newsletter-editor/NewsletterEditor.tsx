@@ -8,7 +8,6 @@ import { NewsletterSections } from './NewsletterSections';
 import { NewsletterPreview } from './NewsletterPreview';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Save, Eye, Plus } from 'lucide-react';
 
 interface NewsletterEditorProps {

@@ -21,7 +21,7 @@ export const NewsletterManager = () => {
       try {
         const parsed = JSON.parse(savedNewsletters);
         // Convert date strings back to Date objects
-        const newslettersWithDates = parsed.map((nl: any) => ({
+        const newslettersWithDates = parsed.map((nl: Newsletter) => ({
           ...nl,
           metadata: {
             ...nl.metadata,

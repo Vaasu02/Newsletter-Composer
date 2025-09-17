@@ -74,7 +74,7 @@ export const NewsletterSections = ({ sections, onChange }: NewsletterSectionsPro
       <CardContent className="space-y-4">
         {sections.length === 0 ? (
           <div className="text-center py-8 text-gray-500">
-            <p>No sections yet. Click "Add Section" to get started.</p>
+            <p>No sections yet. Click &quot;Add Section&quot; to get started.</p>
           </div>
         ) : (
           sections.map((section, index) => (
