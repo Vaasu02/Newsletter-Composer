@@ -173,14 +173,3 @@ The application can be deployed to any platform that supports Next.js:
 4. Test thoroughly
 5. Submit a pull request
 
-## License
-
-This project is licensed under the MIT License.
-
-## Support
-
-For questions or issues, please open an issue on GitHub or contact the development team.
-
----
-
-**Built with ❤️ for Spaces OS**
