@@ -3,7 +3,6 @@ import {
   Button,
   Container,
   Head,
-  Hr,
   Html,
   Preview,
   Section,
@@ -22,25 +21,16 @@ export const HeaderContentFooterTemplate = ({ newsletter }: HeaderContentFooterT
       <Preview>{newsletter.metadata.subject}</Preview>
       <Body style={main}>
         <Container style={container}>
-          {newsletter.sections.map((section, index) => (
-            <div key={section.id}>
-              <Section style={
-                index === 0 ? headerStyle : 
-                index === newsletter.sections.length - 1 ? footerStyle : 
-                sectionStyle
-              }>
-                {section.type === 'button' ? (
-                  <Button style={buttonStyle} href="#">
-                    {section.content.replace(/\[([^\]]+)\]\([^)]+\)/, '$1')}
-                  </Button>
-                ) : (
-                  <Markdown>{section.content}</Markdown>
-                )}
-              </Section>
-              
-              {/* Add horizontal rule between sections (except after last) */}
-              {index < newsletter.sections.length - 1 && <Hr style={hr} />}
-            </div>
+          {newsletter.sections.map((section) => (
+            <Section key={section.id} style={sectionStyle}>
+              {section.type === 'button' ? (
+                <Button style={buttonStyle} href="#">
+                  {section.content.replace(/\[([^\]]+)\]\([^)]+\)/, '$1')}
+                </Button>
+              ) : (
+                <Markdown>{section.content}</Markdown>
+              )}
+            </Section>
           ))}
         </Container>
       </Body>
@@ -49,36 +39,19 @@ export const HeaderContentFooterTemplate = ({ newsletter }: HeaderContentFooterT
 };
 
 const main = {
-  backgroundColor: '#f6f9fc',
+  backgroundColor: '#ffffff',
   fontFamily: 'HelveticaNeue,Helvetica,Arial,sans-serif',
 };
 
 const container = {
-  backgroundColor: '#ffffff',
   margin: '0 auto',
-  padding: '20px 0 48px',
+  padding: '20px 24px 48px',
   maxWidth: '560px',
-  borderRadius: '8px',
-  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-};
-
-const headerStyle = {
-  padding: '32px 32px 16px',
-  textAlign: 'center' as const,
-  backgroundColor: '#f8fafc',
-  borderTopLeftRadius: '8px',
-  borderTopRightRadius: '8px',
 };
 
 const sectionStyle = {
-  padding: '16px 32px',
-};
-
-const footerStyle = {
-  padding: '16px 32px 32px',
-  textAlign: 'center' as const,
-  color: '#6b7280',
-  fontSize: '14px',
+  marginBottom: '24px',
+  padding: '16px 24px',
 };
 
 const buttonStyle = {
@@ -92,9 +65,4 @@ const buttonStyle = {
   display: 'block',
   padding: '12px 24px',
   margin: '16px 0',
-};
-
-const hr = {
-  borderColor: '#e5e7eb',
-  margin: '20px 0',
 };

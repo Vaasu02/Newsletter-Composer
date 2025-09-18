@@ -63,7 +63,7 @@ export const NewsletterPreviewDrawer = ({ newsletter, onClose }: NewsletterPrevi
             </div>
           ) : (
             <div 
-              className="bg-white border rounded-lg overflow-hidden"
+              className="bg-white border rounded-lg overflow-hidden p-4"
               dangerouslySetInnerHTML={{ __html: emailHtml }}
             />
           )}

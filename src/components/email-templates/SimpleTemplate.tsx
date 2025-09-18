@@ -38,10 +38,11 @@ const main = {
 
 const container = {
   margin: '0 auto',
-  padding: '20px 0 48px',
+  padding: '20px 24px 48px',
   maxWidth: '560px',
 };
 
 const sectionStyle = {
   marginBottom: '24px',
+  padding: '16px 24px',
 };

@@ -54,7 +54,10 @@ export const NewsletterPreview = ({ newsletter }: NewsletterPreviewProps) => {
               <div className="text-gray-500">Loading preview...</div>
             </div>
           ) : (
-            <div dangerouslySetInnerHTML={{ __html: emailHtml }} />
+            <div 
+              className="p-2"
+              dangerouslySetInnerHTML={{ __html: emailHtml }} 
+            />
           )}
         </div>
       </div>
