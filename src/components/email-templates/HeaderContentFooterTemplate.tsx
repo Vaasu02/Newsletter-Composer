@@ -19,12 +19,12 @@ export const HeaderContentFooterTemplate = ({ newsletter }: HeaderContentFooterT
     <Html>
       <Head />
       <Preview>{newsletter.metadata.subject}</Preview>
-      <Body style={main}>
-        <Container style={container}>
+      <Body className="email-main">
+        <Container className="email-container">
           {newsletter.sections.map((section) => (
-            <Section key={section.id} style={sectionStyle}>
+            <Section key={section.id} className="email-section">
               {section.type === 'button' ? (
-                <Button style={buttonStyle} href="#">
+                <Button className="email-button" href="#">
                   {section.content.replace(/\[([^\]]+)\]\([^)]+\)/, '$1')}
                 </Button>
               ) : (
@@ -38,31 +38,3 @@ export const HeaderContentFooterTemplate = ({ newsletter }: HeaderContentFooterT
   );
 };
 
-const main = {
-  backgroundColor: '#ffffff',
-  fontFamily: 'HelveticaNeue,Helvetica,Arial,sans-serif',
-};
-
-const container = {
-  margin: '0 auto',
-  padding: '20px 24px 48px',
-  maxWidth: '560px',
-};
-
-const sectionStyle = {
-  marginBottom: '24px',
-  padding: '16px 24px',
-};
-
-const buttonStyle = {
-  backgroundColor: '#3b82f6',
-  borderRadius: '6px',
-  color: '#ffffff',
-  fontSize: '16px',
-  fontWeight: 'bold',
-  textDecoration: 'none',
-  textAlign: 'center' as const,
-  display: 'block',
-  padding: '12px 24px',
-  margin: '16px 0',
-};

@@ -31,45 +31,54 @@ export const NewsletterList = ({ newsletters, onEdit, onDelete, onPreview }: New
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {newsletters.map((newsletter) => (
-        <Card key={newsletter.id} className="hover:shadow-md transition-shadow">
-          <CardHeader>
+        <Card key={newsletter.id} className="group hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm hover:bg-white hover:-translate-y-1">
+          <CardHeader className="pb-3">
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <CardTitle className="text-lg line-clamp-2">
+                <CardTitle className="text-lg font-semibold line-clamp-2 text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
                   {newsletter.metadata.subject || 'Untitled Newsletter'}
                 </CardTitle>
-                <div className="flex items-center gap-2 mt-2">
-                  <Badge variant={newsletter.status === 'draft' ? 'secondary' : 'default'}>
+                <div className="flex items-center gap-2 mt-3">
+                  <Badge 
+                    variant={newsletter.status === 'draft' ? 'secondary' : 'default'}
+                    className={`text-xs font-medium px-2 py-1 ${
+                      newsletter.status === 'draft' 
+                        ? 'bg-amber-100 text-amber-700 border-amber-200' 
+                        : 'bg-green-100 text-green-700 border-green-200'
+                    }`}
+                  >
                     {newsletter.status}
                   </Badge>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-xs text-gray-500 font-medium bg-gray-100 px-2 py-1 rounded-full">
                     {newsletter.sections.length} sections
                   </span>
                 </div>
               </div>
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="text-sm text-gray-600">
-                <div className="flex items-center gap-1">
-                  <Clock className="h-3 w-3" />
-                  Created: {newsletter.metadata.createdAt.toLocaleDateString()}
+          <CardContent className="pt-0">
+            <div className="space-y-4">
+              <div className="text-xs text-gray-600 space-y-2">
+                <div className="flex items-center gap-2 bg-gray-50 p-2 rounded-lg">
+                  <Clock className="h-3 w-3 text-gray-400" />
+                  <span className="font-medium">Created:</span>
+                  <span>{newsletter.metadata.createdAt.toLocaleDateString()}</span>
                 </div>
                 {newsletter.scheduledDate && (
-                  <div className="flex items-center gap-1 mt-1">
-                    <Calendar className="h-3 w-3" />
-                    Scheduled: {newsletter.scheduledDate.toLocaleDateString()} at {newsletter.scheduledDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  <div className="flex items-center gap-2 bg-blue-50 p-2 rounded-lg">
+                    <Calendar className="h-3 w-3 text-blue-500" />
+                    <span className="font-medium text-blue-700">Scheduled:</span>
+                    <span className="text-blue-600">{newsletter.scheduledDate.toLocaleDateString()} at {newsletter.scheduledDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                   </div>
                 )}
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex gap-2 pt-2">
                 <Button
                   onClick={() => onPreview(newsletter)}
                   variant="outline"
                   size="sm"
-                  className="flex-1"
+                  className="flex-1 bg-white hover:bg-blue-50 hover:border-blue-300 hover:text-blue-600 transition-all duration-200"
                 >
                   <Eye className="h-3 w-3 mr-1" />
                   Preview
@@ -78,7 +87,7 @@ export const NewsletterList = ({ newsletters, onEdit, onDelete, onPreview }: New
                   onClick={() => onEdit(newsletter)}
                   variant="outline"
                   size="sm"
-                  className="flex-1"
+                  className="flex-1 bg-white hover:bg-green-50 hover:border-green-300 hover:text-green-600 transition-all duration-200"
                 >
                   <Edit className="h-3 w-3 mr-1" />
                   Edit
@@ -87,7 +96,7 @@ export const NewsletterList = ({ newsletters, onEdit, onDelete, onPreview }: New
                   onClick={() => onDelete(newsletter.id)}
                   variant="outline"
                   size="sm"
-                  className="text-red-600 hover:text-red-700"
+                  className="bg-white hover:bg-red-50 hover:border-red-300 text-red-600 hover:text-red-700 transition-all duration-200"
                 >
                   <Trash2 className="h-3 w-3" />
                 </Button>
