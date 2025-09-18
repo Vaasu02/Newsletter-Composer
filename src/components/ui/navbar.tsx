@@ -44,7 +44,7 @@ export const Navbar = ({ onNewNewsletter, showBackButton, onBack }: NavbarProps)
             </div>
             
             {/* Title and Subtitle */}
-            <div className="flex flex-col">
+            <div className={`flex flex-col ${showBackButton ? 'hidden md:flex' : 'flex'}`}>
               <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                 Newsletter Composer
               </h1>
